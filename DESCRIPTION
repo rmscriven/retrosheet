@@ -1,0 +1,16 @@
+Package: retrosheet
+Type: Package
+Title: Import Retrosheet data as a structured R object
+Version: 1.0
+Authors@R: c(person("Richard", "Scriven", email = "rmscriven@gmail.com",
+    role = c("aut", "cre")), person("Ananda", "Mahto", email = "mrdwab@gmail.com", role = "aut"))
+Date: 2015-03-17
+Maintainer: Richard Scriven <rmscriven@gmail.com>
+Description: The event files at http://www.retrosheet.org/game.htm
+    can be difficult to parse.  This package does the parsing on those
+    files for you, returning the requested event as a structured R object.
+    It will also retrieve the gamelog and schedule files if requested.
+URL: http://github.com/rmscriven/retrosheet
+Depends: R (>= 2.10)
+License: GPL (>= 2)
+Imports: RCurl (>= 1.95-4.5)
