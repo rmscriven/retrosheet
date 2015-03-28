@@ -8,5 +8,6 @@ files if specified, but is mainly a parser for the play-by-play files.
 
 Installation:
 
-`install.packages("devtools")`
-`devtools::install_github("rmscriven/retrosheet")`
+	install.packages("devtools")
+	devtools::install_github("rmscriven/retrosheet")
+
