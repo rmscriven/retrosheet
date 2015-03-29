@@ -28,15 +28,18 @@
 #' \item \code{schedule} - a data frame containing the game schedule for the given year
 #' }
 #'
+#' @author Ananda Mahto
+#' @author Richard Scriven
+#'
 #' @examples
 #' \dontrun{
 #'
 #' ## gamelog data for the 2012 season
 #' getRetrosheet("game", 2012)
-#' ## play-by-play data for the San Francisco Giants for the 2012 season
+#' ## play-by-play data for the San Francisco Giants for the 2012 season.
+#' ## For most seasons, returns a length-81 list with seven elements each,
+#' ## one team's entire home-half season.
 #' getRetrosheet("play", 2012, "SFN")
-#' ## a data frame of team information for the 2012 season
-#' getRetrosheetTeamData(2012)
 #' }
 #'
 #'
@@ -118,17 +121,3 @@ getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
     out
 }
 
-#' @rdname getRetrosheet
-#' @export
-getRetrosheetTeamData <- function(year, ...) {
-    path <- sprintf("http://www.retrosheet.org/events/%deve.zip", year)
-    if(RCurl::url.exists(path)) {
-        tmp <- tempfile()
-        on.exit(unlink(tmp))
-        download.file(path, destfile = tmp, ...)
-    } else {
-        stop("Given year not found in retrosheet.org event database")
-    }
-    read.csv(unz(tmp, filename = paste0("TEAM", year)), header = FALSE,
-        col.names = c("TeamID", "LeagueID", "City", "Name"), stringsAsFactors = FALSE)
-}

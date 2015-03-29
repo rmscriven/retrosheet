@@ -13,7 +13,8 @@ Description: The event files at http://www.retrosheet.org/game.htm
 URL: http://github.com/rmscriven/retrosheet
 Depends: R (>= 2.10)
 License: GPL (>= 2)
-Imports: RCurl (>= 1.95-4.5)
+Imports: RCurl (>= 1.95-4.5),
+    XML (>= 3.98-1.1)
 Note: Notice regarding the transfer of data from Retrosheet:
     The information used here was obtained free of charge from
     and is copyrighted by Retrosheet. Interested parties may

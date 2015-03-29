@@ -2,12 +2,9 @@
 % Please edit documentation in R/getRetrosheet.R
 \name{getRetrosheet}
 \alias{getRetrosheet}
-\alias{getRetrosheetTeamData}
 \title{Import Retrosheet data as a structured R object}
 \usage{
 getRetrosheet(type, year, team, stringsAsFactors = FALSE, ...)
-
-getRetrosheetTeamData(year, ...)
 }
 \arguments{
 \item{type}{character.  This argument can take on either of "game" for
@@ -51,10 +48,15 @@ This function downloads and parses data from
 
 ## gamelog data for the 2012 season
 getRetrosheet("game", 2012)
-## play-by-play data for the San Francisco Giants for the 2012 season
+## play-by-play data for the San Francisco Giants for the 2012 season.
+## For most seasons, returns a length-81 list with seven elements each,
+## one team's entire home-half season.
 getRetrosheet("play", 2012, "SFN")
-## a data frame of team information for the 2012 season
-getRetrosheetTeamData(2012)
 }
+}
+\author{
+Ananda Mahto
+
+Richard Scriven
 }
 
