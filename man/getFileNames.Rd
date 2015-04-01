@@ -2,19 +2,25 @@
 % Please edit documentation in R/getFileNames.R
 \name{getFileNames}
 \alias{getFileNames}
-\title{Retrieve a list of current available downloads}
+\title{A list of current available Retrosheet downloads}
 \usage{
 getFileNames()
 }
 \value{
-a named list of available Retrosheet zip and text files
+A named list of available single-season Retrosheet event and
+game-log zip files, and schedule text files. These file names are
+not intended to be passed to \code{getRetrosheet}, but is simply a
+fast way to determine if the desired data is available.
 }
 \description{
-This function is for convenience, and returns the file names
-of available downloads for the \code{year} and \code{type} arguments
-in \code{getRetrosheet()}
+A convenience, returning the base file names of the
+available downloads for the \code{year} and \code{type} arguments
+in \code{getRetrosheet}.
 }
 \details{
 
+}
+\examples{
+getFileNames()
 }
 

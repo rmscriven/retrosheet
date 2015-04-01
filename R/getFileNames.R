@@ -1,15 +1,21 @@
 #'
-#' @title Retrieve a list of current available downloads
+#' @title A list of current available Retrosheet downloads
 #'
-#' @description This function is for convenience, and returns the file names
-#' of available downloads for the \code{year} and \code{type} arguments
-#' in \code{getRetrosheet()}
+#' @description A convenience, returning the base file names of the
+#' available downloads for the \code{year} and \code{type} arguments
+#' in \code{getRetrosheet}.
 #'
-#' @return a named list of available Retrosheet zip and text files
+#' @return A named list of available single-season Retrosheet event and
+#' game-log zip files, and schedule text files. These file names are
+#' not intended to be passed to \code{getRetrosheet}, but is simply a
+#' fast way to determine if the desired data is available.
 #'
 #' @name getFileNames
-#' @export
 #'
+#' @examples getFileNames()
+#'
+#' @export
+
 getFileNames <- function() {
     path <- c(event = "game.htm", gamelog = "gamelogs/index.html",
         schedule = "schedule/index.html")
@@ -29,32 +35,3 @@ getFileNames <- function() {
     lapply(docs, XML::free)
     res
 }
-
-
-#' @name getTeamData
-#'
-#' @title Retrieve a data frame of team information
-#'
-#' @description This function is for convenience, and returns a data frame of
-#' team information, including team IDs, for the \code{team} argument in \code{getRetrosheet()}.
-#'
-#' @param year integer. A valid four-digit year.
-#' @param ... further arguments passed to \code{\link[utils]{download.file}}.
-#'
-#' @return a data frame of team info for the given year
-#'
-#' @export
-#'
-getTeamData <- function(year, ...) {
-    path <- sprintf("http://www.retrosheet.org/events/%deve.zip", year)
-    if(RCurl::url.exists(path)) {
-        tmp <- tempfile()
-        on.exit(unlink(tmp))
-        download.file(path, destfile = tmp, ...)
-    } else {
-        stop("Given year not found in retrosheet.org event database")
-    }
-    read.csv(unz(tmp, filename = paste0("TEAM", year)), header = FALSE,
-        col.names = c("TeamID", "LeagueID", "City", "Name"), stringsAsFactors = FALSE)
-}
-
