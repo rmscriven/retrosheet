@@ -6,6 +6,7 @@
 #' \code{team} argument of \code{getRetrosheet("play", year, team)}.
 #'
 #' @param year A single valid four-digit numeric year.
+#' @param quiet logical. Passed to \code{\link[utils]{downlad.file}}
 #' @param ... further arguments passed to \code{\link[utils]{download.file}}.
 #'
 #' @return If the file exists, a named vector of IDs for the given year.

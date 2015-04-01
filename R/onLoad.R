@@ -5,9 +5,10 @@ The information used here was obtained free of charge from
 and is copyrighted by Retrosheet. Interested parties may
 contact Retrosheet at \"www.retrosheet.org\"\n")
 
+    load("data/retrosheetFields.RData", as.environment("package:retrosheet"))
+
 }
 
 .onLoad <- function(libname, pkgname) {
-    load("R/sysdata.rda")
     options(retrosheet.glFields = retrosheetFields$gamelog)
 }
