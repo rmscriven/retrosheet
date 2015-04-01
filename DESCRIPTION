@@ -14,7 +14,8 @@ URL: http://github.com/rmscriven/retrosheet
 Depends: R (>= 2.10)
 License: GPL (>= 2)
 Imports: RCurl (>= 1.95-4.5),
-    XML (>= 3.98-1.1)
+    XML (>= 3.98-1.1),
+    data.table(>= 1.9.4)
 Note: Notice regarding the transfer of data from Retrosheet:
     The information used here was obtained free of charge from
     and is copyrighted by Retrosheet. Interested parties may

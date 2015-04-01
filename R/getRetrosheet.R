@@ -42,6 +42,7 @@
 #' getRetrosheet("play", 2012, "SFN")
 #' }
 #'
+#' @importFrom RCurl url.exists
 #'
 #' @export
 getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
@@ -62,7 +63,7 @@ getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
 
     fullPath <- sprintf(paste0(u, path), year)
 
-    if(RCurl::url.exists(fullPath)) {
+    if(url.exists(fullPath)) {
 
         if(type == "schedule") {
             out <- read.csv(fullPath, header = FALSE,
@@ -120,4 +121,3 @@ getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
     names(out) <- paste0("game", seq_along(out))
     out
 }
-

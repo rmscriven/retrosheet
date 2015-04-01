@@ -4,25 +4,32 @@
 #' @description Choose the columns and rows
 #'
 #' @param year A single four-digit year.
-#' @param glFields A subset of \code{getOption("retrosheet.glFields")}
+#' @param glFields A subset of \code{gamelogFields}
 #' @param date One of either NULL (the default), or a four-digit
 #' character string identifying the date 'mmdd'
 #' @param ... further arguments passed to \code{\link[utils]{download.file}}
 #'
+#' @importFrom data.table fread
+#' @importFrom data.table setnames
+#'
 #' @export
 #'
-#' @return A data table with dimensions
-#' \code{length(date)} x \code{length(glFields)}
+#' @return
+#' \itemize{
+#' \item{\code{getPartialGamelog}}{ - A data table with dimensions \code{length(date)} x \code{length(glFields)} if
+#' \code{date} is not NULL, otherwise the row dimension is the nuber of games for the given year.}
+#' \item{\code{gamelogFields}}{ - A character vector of possible values to choose from for the
+#' \code{glFlields} argument in \code{getPartialGamelog}.}
+#' }
 #'
-#' @examples ## Get Homerun and RBI info for August 25, 2012
-#' f <- grep("HR|RBI", getOption("retrosheet.glFields"), value = TRUE)
+#' @examples ## Get Homerun and RBI info for August 25, 2012, with ballpark ID
+#' f <- grep("HR|RBI|Park", gamelogFields, value = TRUE)
 #' getPartialGamelog(2012, glFields = f, date = "0825")
 #'
-getPartialGamelog <- function(
-    year, glFields = getOption("retrosheet.glFields"), date = NULL, ...) {
+getPartialGamelog <- function(year, glFields, date = NULL, ...) {
 
-    ## check 'glFields'
-    if(identical(glFields, getOption("retrosheet.glFields"))) {
+    ## check 'glFields' against package variable 'gamelogFields'
+    if(identical(glFields, retrosheetFields$gamelog)) {
         stop(shQuote("getPartialGamelog"), " is for efficiently return a small subset of the entire file. For the full table, use ", shQuote("getRetrosheet(\"game\", year)"))
     }
 
@@ -36,25 +43,59 @@ getPartialGamelog <- function(
     download.file(full, destfile = tmp, ...)
 
     ## extract the text file
-    fname <- unzip(tmp, file = unzip(tmp, list = TRUE)$Name)
+    fname <- unzip(tmp, files = unzip(tmp, list = TRUE)$Name)
     on.exit(unlink(fname))
 
     ## match 'glFields' against the internal name vector
-    fields <- retrosheetFields$gamelog
-    sel <- union(1L, sort(match(glFields, fields)))
+    sel <- union(1L, sort(match(glFields, retrosheetFields$gamelog)))
 
     ## read the data
     out <- if(is.null(date)) {
-        data.table::fread(fname, select = sel, header = FALSE)
+        fread(fname, select = sel, header = FALSE)
     } else {
         command <- sprintf("grep '%s' %s", paste0(year, date), fname)
-        data.table::fread(command, header = FALSE, select = sel)
+        fread(command, header = FALSE, select = sel)
             #if(is.null(date)) fname else command,
     }
 
     ## set the names
-    data.table::setnames(out, fields[sel])
+    setnames(out, retrosheetFields$gamelog[sel])
 
     ## return the table
     out
 }
+
+#' @rdname getPartialGamelog
+#'
+#' @name gamelogFields
+#'
+#' @export
+#'
+gamelogFields <- c("Date", "DblHdr", "Day", "VisTm", "VisTmLg", "VisTmGNum", "HmTm",
+    "HmTmLg", "HmTmGNum", "VisRuns", "HmRuns", "NumOuts", "DayNight",
+    "Completion", "Forfeit", "Protest", "ParkID", "Attendance", "Duration",
+    "VisLine", "HmLine", "VisAB", "VisH", "VisD", "VisT", "VisHR",
+    "VisRBI", "VisSH", "VisSF", "VisHBP", "VisBB", "VisIBB", "VisK",
+    "VisSB", "VisCS", "VisGDP", "VisCI", "VisLOB", "VisPs", "VisER",
+    "VisTER", "VisWP", "VisBalks", "VisPO", "VisA", "VisE", "VisPassed",
+    "VisDB", "VisTP", "HmAB", "HmH", "HmD", "HmT", "HmHR", "HmRBI",
+    "HmSH", "HmSF", "HmHBP", "HmBB", "HmIBB", "HmK", "HmSB", "HmCS",
+    "HmGDP", "HmCI", "HmLOB", "HmPs", "HmER", "HmTER", "HmWP", "HmBalks",
+    "HmPO", "HmA", "HmE", "HmPass", "HmDB", "HmTP", "UmpHID", "UmpHNm",
+    "Ump1BID", "Ump1BNm", "Ump2BID", "Ump2BNm", "Ump3BID", "Ump3BNm",
+    "UmpLFID", "UmpLFNm", "UmpRFID", "UmpRFNm", "VisMgrID", "VisMgrNm",
+    "HmMgrID", "HmMgrNm", "WinPID", "WinPNm", "PID", "PNAme", "SavePID",
+    "SavePNm", "GWinRBIID", "GWinRBINm", "VisStPchID", "VisStPchNm",
+    "HmStPchID", "HmStPchNm", "VisBat1ID", "VisBat1Nm", "VisBat1Pos",
+    "VisBat2ID", "VisBat2Nm", "VisBat2Pos", "VisBat3ID", "VisBat3Nm",
+    "VisBat3Pos", "VisBat4ID", "VisBat4Nm", "VisBat4Pos", "VisBat5ID",
+    "VisBat5Nm", "VisBat5Pos", "VisBat6ID", "VisBat6Nm", "VisBat6Pos",
+    "VisBat7ID", "VisBat7Nm", "VisBat7Pos", "VisBat8ID", "VisBat8Nm",
+    "VisBat8Pos", "VisBat9ID", "VisBat9Nm", "VisBat9Pos", "HmBat1ID",
+    "HmBat1Nm", "HmBat1Pos", "HmBat2ID", "HmBat2Nm", "HmBat2Pos",
+    "HmBat3ID", "HmBat3Nm", "HmBat3Pos", "HmBat4ID", "HmBat4Nm",
+    "HmBat4Pos", "HmBat5ID", "HmBat5Nm", "HmBat5Pos", "HmBat6ID",
+    "HmBat6Nm", "HmBat6Pos", "HmBat7ID", "HmBat7Nm", "HmBat7Pos",
+    "HmBat8ID", "HmBat8Nm", "HmBat8Pos", "HmBat9ID", "HmBat9Nm",
+    "HmBat9Pos", "Additional", "Acquisition")
+
