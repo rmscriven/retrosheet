@@ -13,6 +13,8 @@
 #' A single valid team ID for the given year. For available team IDs for the
 #' given year call \code{getRetrosheetTeamData(year)}.  The available teams
 #' are in the "TeamID" column.
+#' @param schedSplit One of "Date", "HmTeam", or "TimeOfDay" to return a list
+#' split by the given value, or NULL (the default) for no splitting.
 #' @param stringsAsFactors logical. The \code{stringsAsFactors} argument as
 #' used in \code{\link[base]{data.frame}}. Currently applicable to types "game" and "schedule".
 #' @param ... further arguments passed to \code{\link[utils]{download.file}}.
@@ -32,20 +34,25 @@
 #' @author Richard Scriven
 #'
 #' @examples
-#' \dontrun{
+#' ## get the full 1995 season schedule
+#' getRetrosheet("schedule", 1995)
+#' ## get the same schedule, split by home team
+#' getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
 #'
-#' ## gamelog data for the 2012 season
+#' ## get the roster data for the 1995 season, listed by team
+#' getRetrosheet("roster", 1995)
+#'
+#' ## get the full gamelog data for the 2012 season
 #' getRetrosheet("game", 2012)
-#' ## play-by-play data for the San Francisco Giants for the 2012 season.
-#' ## For most seasons, returns a length-81 list with seven elements each,
-#' ## one team's entire home-half season.
+#'
+#' ## get the play-by-play data for the San Francisco Giants 2012 season
 #' getRetrosheet("play", 2012, "SFN")
-#' }
 #'
 #' @importFrom RCurl url.exists
 #'
 #' @export
-getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
+
+getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, ...) {
 
     type <- match.arg(type, c("game", "play", "roster", "schedule"))
 
@@ -66,9 +73,12 @@ getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
     if(url.exists(fullPath)) {
 
         if(type == "schedule") {
-            out <- read.csv(fullPath, header = FALSE,
-                col.names = retrosheetFields$schedule,
+            out <- read.csv(fullPath, header = FALSE, col.names = retrosheetFields$schedule,
                 stringsAsFactors = stringsAsFactors)
+            if(is.character(schedSplit)) {
+                schedSplit <- match.arg(schedSplit, c("Date", "HmTeam", "TimeOfDay"))
+                out <- split(out, out[[schedSplit]])
+            }
             return(out)
         }
 
@@ -83,8 +93,7 @@ getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
     fname <- unzip(tmp, list = TRUE)$Name
 
     if(type == "game") {
-        out <- read.csv(unz(tmp, filename = fname), header = FALSE,
-            col.names = retrosheetFields$gamelog,
+        out <- read.csv(unz(tmp, filename = fname), header = FALSE, col.names = retrosheetFields$gamelog,
             stringsAsFactors = stringsAsFactors)
         return(out)
     }
@@ -92,8 +101,7 @@ getRetrosheet <- function(type, year, team, stringsAsFactors = FALSE, ...) {
     if(type == "roster") {
         rosFiles <- grep(".ROS", fname, value = TRUE, fixed = TRUE)
         read <- lapply(rosFiles, function(x) {
-            read.csv(unz(tmp, filename = x), header = FALSE,
-                col.names = retrosheetFields$roster,
+            read.csv(unz(tmp, filename = x), header = FALSE, col.names = retrosheetFields$roster,
                 stringsAsFactors = stringsAsFactors)
         })
         out <- setNames(read, substr(rosFiles, 1L, 3L))
