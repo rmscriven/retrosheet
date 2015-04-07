@@ -22,7 +22,7 @@
 #' @examples getTeamIDs(2010)
 #'
 getTeamIDs <- function(year, quiet = TRUE, ...) {
-    stopifnot(is.numeric(year))
+    stopifnot(is.numeric(year), length(year) == 1L)
     path <- sprintf("http://www.retrosheet.org/events/%deve.zip", year)
     if (url.exists(path)) {
         tmp <- tempfile()
