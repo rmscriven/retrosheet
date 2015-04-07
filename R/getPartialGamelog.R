@@ -44,7 +44,7 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
 
     ## extract the text file
     fname <- unzip(tmp, files = unzip(tmp, list = TRUE)$Name)
-    on.exit(unlink(fname))
+    on.exit(unlink(fname), add = TRUE)
 
     ## match 'glFields' against the internal name vector
     sel <- union(1L, sort(match(glFields, retrosheetFields$gamelog)))
