@@ -57,7 +57,7 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
     type <- match.arg(type, c("game", "play", "roster", "schedule"))
 
     if(type == "play" && missing(team)) {
-        stop('argument team must be supplied when type = "play"')
+        stop("argument 'team' must be supplied when 'type = \"play\"")
     }
 
     u <- "http://www.retrosheet.org"
