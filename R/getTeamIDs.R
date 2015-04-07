@@ -29,18 +29,15 @@ getTeamIDs <- function(year, quiet = TRUE, ...) {
         on.exit(unlink(tmp))
         download.file(path, destfile = tmp, quiet = quiet, ...)
     } else {
-        available <- substr(getFileNames()$event, 1L, 4L)
-        m <- match(year, type.convert(available))
-        if(is.na(m)) {
-            return(m)
-        } else {
-            stop("Invalid URL after RCurl check")
+        available <- grep(year, getFileNames()$event)
+        if(!length(available)) {
+            return(NA)
         }
     }
     fname <- paste0("TEAM", year)
     unzip(tmp, files = fname)
     on.exit(unlink(fname), add = TRUE)
-    read <- fread(fname, header = FALSE, drop = 2:3)
+    read <- suppressWarnings(fread(fname, header = FALSE, drop = 2:3))
     out <- structure(read[[1L]], .Names = read[[2L]])
     out
 }
