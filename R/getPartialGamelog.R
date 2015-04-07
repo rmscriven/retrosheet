@@ -28,9 +28,9 @@
 #'
 getPartialGamelog <- function(year, glFields, date = NULL, ...) {
 
-    ## check 'glFields' against package variable 'gamelogFields'
+    ## check 'glFields' against package variable 'retrosheetFields$gamelog'
     if(identical(glFields, retrosheetFields$gamelog)) {
-        stop(shQuote("getPartialGamelog"), " is for efficiently return a small subset of the entire file. For the full table, use ", shQuote("getRetrosheet(\"game\", year)"))
+        stop(shQuote("getPartialGamelog"), " is for efficiently returning a small subset of the entire file. For the full table, use ", shQuote("getRetrosheet(\"game\", year)"))
     }
 
     ## define the url
@@ -55,7 +55,6 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
     } else {
         command <- sprintf("grep '%s' %s", paste0(year, date), fname)
         fread(command, header = FALSE, select = sel)
-            #if(is.null(date)) fname else command,
     }
 
     ## set the names
