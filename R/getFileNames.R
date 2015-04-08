@@ -1,7 +1,7 @@
 #'
-#' @title A list of current available Retrosheet downloads
+#' Files currently available for download
 #'
-#' @description A convenience, returning the base file names of the
+#' A convenience function, returning the base file names of the
 #' available downloads for the \code{year} and \code{type} arguments
 #' in \code{getRetrosheet}.
 #'

@@ -1,9 +1,8 @@
 #'
-#' @title Import Retrosheet data as a structured R object
+#' Import single-season retrosheet data as a structured R object
 #'
-#' @description This function downloads and parses data from
-#' \url{http://www.retrosheet.org} for the gamelog, play-by-play
-#' (a.k.a. event), roster, and schedule files.
+#' This function downloads and parses data from \url{http://www.retrosheet.org}
+#' for the game-log, event, (play-by-play), roster, and schedule files.
 #'
 #' @param type character.  This argument can take on either of "game" for
 #' game-logs, "play" for play-by-play (a.k.a. event) data, "roster" for
@@ -39,10 +38,10 @@
 #' \dontrun{
 #' ## get the same schedule, split by time of day
 #' getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
-#'}
+#'
 #' ## get the roster data for the 1995 season, listed by team
 #' getRetrosheet("roster", 1995)
-#' \dontrun{
+#'
 #' ## get the full gamelog data for the 2012 season
 #' getRetrosheet("game", 2012)
 #'

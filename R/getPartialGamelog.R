@@ -1,11 +1,13 @@
 #'
-#' @title Partial parser for game-log files
+#' Partial parser for game-log files
 #'
-#' @description Choose the columns and rows
+#' Instead of returning the entire file, this function allows the user
+#' to choose the columns and date for game-log data.
 #'
 #' @param year A single four-digit year.
-#' @param glFields A subset of \code{gamelogFields}
-#' @param date One of either NULL (the default), or a four-digit
+#' @param glFields character.  The desired game-log columns.  This should be a
+#' subset of \code{gamelogFields}, and \strong{not} the entire vector.
+#' @param date One of either NULL (the default), or a single four-digit
 #' character string identifying the date 'mmdd'
 #' @param ... further arguments passed to \code{\link[utils]{download.file}}
 #'

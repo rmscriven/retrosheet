@@ -15,9 +15,10 @@ gamelogFields
 \arguments{
 \item{year}{A single four-digit year.}
 
-\item{glFields}{A subset of \code{gamelogFields}}
+\item{glFields}{character.  The desired game-log columns.  This should be a
+subset of \code{gamelogFields}, and \strong{not} the entire vector.}
 
-\item{date}{One of either NULL (the default), or a four-digit
+\item{date}{One of either NULL (the default), or a single four-digit
 character string identifying the date 'mmdd'}
 
 \item{...}{further arguments passed to \code{\link[utils]{download.file}}}
@@ -31,10 +32,8 @@ character string identifying the date 'mmdd'}
 }
 }
 \description{
-Choose the columns and rows
-}
-\details{
-
+Instead of returning the entire file, this function allows the user
+to choose the columns and date for game-log data.
 }
 \examples{
 ## Get Homerun and RBI info for August 25, 2012, with ballpark ID

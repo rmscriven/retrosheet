@@ -2,7 +2,7 @@
 % Please edit documentation in R/getFileNames.R
 \name{getFileNames}
 \alias{getFileNames}
-\title{A list of current available Retrosheet downloads}
+\title{Files currently available for download}
 \usage{
 getFileNames()
 }
@@ -13,12 +13,9 @@ not intended to be passed to \code{getRetrosheet}, but is simply a
 fast way to determine if the desired data is available.
 }
 \description{
-A convenience, returning the base file names of the
+A convenience function, returning the base file names of the
 available downloads for the \code{year} and \code{type} arguments
 in \code{getRetrosheet}.
-}
-\details{
-
 }
 \examples{
 getFileNames()

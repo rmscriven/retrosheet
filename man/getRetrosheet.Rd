@@ -2,7 +2,7 @@
 % Please edit documentation in R/getRetrosheet.R
 \name{getRetrosheet}
 \alias{getRetrosheet}
-\title{Import Retrosheet data as a structured R object}
+\title{Import single-season retrosheet data as a structured R object}
 \usage{
 getRetrosheet(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE,
   ...)
@@ -40,12 +40,8 @@ for the named team for the given year, as a data frame.
 }
 }
 \description{
-This function downloads and parses data from
-\url{http://www.retrosheet.org} for the gamelog, play-by-play
-(a.k.a. event), roster, and schedule files.
-}
-\details{
-
+This function downloads and parses data from \url{http://www.retrosheet.org}
+for the gamelog, event, (play-by-play), roster, and schedule files.
 }
 \examples{
 ## get the full 1995 season schedule
@@ -53,10 +49,10 @@ getRetrosheet("schedule", 1995)
 \dontrun{
 ## get the same schedule, split by time of day
 getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
-}
+
 ## get the roster data for the 1995 season, listed by team
 getRetrosheet("roster", 1995)
-\dontrun{
+
 ## get the full gamelog data for the 2012 season
 getRetrosheet("game", 2012)
 
