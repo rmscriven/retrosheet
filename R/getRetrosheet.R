@@ -36,17 +36,19 @@
 #' @examples
 #' ## get the full 1995 season schedule
 #' getRetrosheet("schedule", 1995)
-#' ## get the same schedule, split by home team
+#' \dontrun{
+#' ## get the same schedule, split by time of day
 #' getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
-#'
+#'}
 #' ## get the roster data for the 1995 season, listed by team
 #' getRetrosheet("roster", 1995)
-#'
+#' \dontrun{
 #' ## get the full gamelog data for the 2012 season
 #' getRetrosheet("game", 2012)
 #'
-#' ## get the play-by-play data for the San Francisco Giants 2012 season
+#' ## get the play-by-play data for the San Francisco Giants' 2012 season
 #' getRetrosheet("play", 2012, "SFN")
+#' }
 #'
 #' @importFrom RCurl url.exists
 #'

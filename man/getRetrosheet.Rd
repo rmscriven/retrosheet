@@ -50,17 +50,19 @@ This function downloads and parses data from
 \examples{
 ## get the full 1995 season schedule
 getRetrosheet("schedule", 1995)
+\dontrun{
 ## get the same schedule, split by home team
 getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
-
+}
 ## get the roster data for the 1995 season, listed by team
 getRetrosheet("roster", 1995)
-
+\dontrun{
 ## get the full gamelog data for the 2012 season
 getRetrosheet("game", 2012)
 
 ## get the play-by-play data for the San Francisco Giants 2012 season
 getRetrosheet("play", 2012, "SFN")
+}
 }
 \author{
 Ananda Mahto
