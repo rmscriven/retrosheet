@@ -16,7 +16,7 @@ team rosters, or "schedule" for the game schedule for the given year.}
 
 \item{team}{character. Only to be used if \code{type = "play"}.
 A single valid team ID for the given year. For available team IDs for the
-given year call \code{getRetrosheetTeamData(year)}.  The available teams
+given year call \code{getTeamIDs(year)}.  The available teams
 are in the "TeamID" column.}
 
 \item{schedSplit}{One of "Date", "HmTeam", or "TimeOfDay" to return a list
@@ -51,7 +51,7 @@ This function downloads and parses data from
 ## get the full 1995 season schedule
 getRetrosheet("schedule", 1995)
 \dontrun{
-## get the same schedule, split by home team
+## get the same schedule, split by time of day
 getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
 }
 ## get the roster data for the 1995 season, listed by team
@@ -60,7 +60,7 @@ getRetrosheet("roster", 1995)
 ## get the full gamelog data for the 2012 season
 getRetrosheet("game", 2012)
 
-## get the play-by-play data for the San Francisco Giants 2012 season
+## get the play-by-play data for the San Francisco Giants' 2012 season
 getRetrosheet("play", 2012, "SFN")
 }
 }

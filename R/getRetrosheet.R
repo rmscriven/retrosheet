@@ -11,7 +11,7 @@
 #' @param year integer. A valid four-digit year.
 #' @param team character. Only to be used if \code{type = "play"}.
 #' A single valid team ID for the given year. For available team IDs for the
-#' given year call \code{getRetrosheetTeamData(year)}.  The available teams
+#' given year call \code{getTeamIDs(year)}.  The available teams
 #' are in the "TeamID" column.
 #' @param schedSplit One of "Date", "HmTeam", or "TimeOfDay" to return a list
 #' split by the given value, or NULL (the default) for no splitting.
