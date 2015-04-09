@@ -29,9 +29,6 @@
 #' \item \code{schedule} - a data frame containing the game schedule for the given year
 #' }
 #'
-#' @author Ananda Mahto
-#' @author Richard Scriven
-#'
 #' @examples
 #' ## get the full 1995 season schedule
 #' getRetrosheet("schedule", 1995)
@@ -50,6 +47,7 @@
 #' }
 #'
 #' @importFrom RCurl url.exists
+#' @importFrom stringi stri_split_fixed
 #'
 #' @export
 
@@ -112,21 +110,27 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
     allTeams <- readLines(unz(tmp, filename = paste0("TEAM", year)))
     team <- match.arg(team, substr(allTeams, 1L, 3L))
 
+    # function for single game parsing
+    doGame <- function(x) {
+        sc <- scan(text = x, sep = ",", what = "", flush = TRUE, quiet = TRUE)
+        outer <- retrosheetFields$eventOuter
+        v <- vector("list", 8L)
+        for(i in seq_len(8L)) {
+            sx <- substr(x, regexpr(",", x, fixed = TRUE) + 1L, nchar(x))
+            v[[i]] <- sx[match(sc, outer) == i]
+        }
+        names(v) <- outer
+        v[-c(1:2, 6L)] <- lapply(v[-c(1:2, 6L)], stri_split_fixed, ",", simplify = TRUE)
+        ans <- Map(function(A, B) { colnames(A) <- B; A },
+            A = v, B = retrosheetFields$eventInner)
+        ans
+    }
+
     rgx <- paste(team, "EV", sep = ".")
-    f <- grep(rgx, fname, value = TRUE, fixed = TRUE)
-    rawData <- readLines(unz(tmp, filename = f))
-    DE <- strsplit(rawData, ",", fixed = TRUE)
-    Ids <- vapply(DE, `[`, character(1L), 1L) == "id"
-    Step1 <- unname(split(DE, cumsum(Ids)))
-    Step2 <- lapply(Step1, function(x){
-        split(x, vapply(x, `[`, character(1L), 1L))
-    })
-    Step3 <- lapply(Step2, function(x){
-        lapply(x, function(y) suppressWarnings(do.call(rbind, y)))
-    })
-    Step4 <- rapply(Step3, `[`, how = "list", ..1 = , ..2 = -1L)
-    Step5 <- rapply(Step4, gsub, how = "list", pattern = '"', replacement = "")
-    out <- lapply(Step5, .setColNames)
-    names(out) <- paste0("game", seq_along(out))
-    out
+    fnm <- grep(rgx, fname, value = TRUE, fixed = TRUE)
+    r <- readLines(unz(tmp, filename = fnm))
+    g <- grepl("^id", r)
+    sr <- unname(split(gsub("\"", "", r), cumsum(g)))
+    res <- lapply(sr, doGame)
+    res
 }

@@ -41,7 +41,7 @@ for the named team for the given year, as a data frame.
 }
 \description{
 This function downloads and parses data from \url{http://www.retrosheet.org}
-for the gamelog, event, (play-by-play), roster, and schedule files.
+for the game-log, event, (play-by-play), roster, and schedule files.
 }
 \examples{
 ## get the full 1995 season schedule
@@ -59,10 +59,5 @@ getRetrosheet("game", 2012)
 ## get the play-by-play data for the San Francisco Giants' 2012 season
 getRetrosheet("play", 2012, "SFN")
 }
-}
-\author{
-Ananda Mahto
-
-Richard Scriven
 }
 
