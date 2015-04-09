@@ -1,9 +1,8 @@
 Package: retrosheet
 Type: Package
-Title: Import 'Retrosheet' Data as a Structured R Object
-Version: 1.0
-Authors@R: c(person("Richard", "Scriven", email = "rmscriven@gmail.com",
-    role = c("aut", "cre")), person("Ananda", "Mahto", email = "mrdwab@gmail.com", role = "ctb"))
+Title: Import Professional Baseball Data from 'Retrosheet'
+Version: 1.0.1
+Authors@R: person("Richard", "Scriven", email = "rmscriven@gmail.com", role = c("aut", "cre"))
 Date: 2015-03-17
 Maintainer: Richard Scriven <rmscriven@gmail.com>
 Description: A collection of tools for importing the professional baseball data
@@ -16,7 +15,8 @@ Depends: R (>= 2.10)
 License: GPL (>= 2)
 Imports: RCurl (>= 1.95-4.5),
     XML (>= 3.98-1.1),
-    data.table(>= 1.9.4)
+    data.table (>= 1.9.4),
+    stringi (>= 0.5.1)
 Note: Notice regarding the transfer of data from Retrosheet:
     The information used here was obtained free of charge from
     and is copyrighted by Retrosheet. Interested parties may
