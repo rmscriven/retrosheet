@@ -55,7 +55,7 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
     out <- if(is.null(date)) {
         fread(fname, select = sel, header = FALSE)
     } else {
-        command <- sprintf("grep '%s' %s", paste0(year, date), fname)
+        command <- sprintf("grep '%s' %s", paste0(year, date), basename(fname))
         fread(command, header = FALSE, select = sel)
     }
 
