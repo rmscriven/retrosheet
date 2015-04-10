@@ -11,7 +11,7 @@ Currently, the main functions are
  to choose the columns and date. Column names are made available by the global object `gamelogFields`
  
 Also included are convenience functions 
- - `getFileNames()` - for simply viewing a list of all zip files available for use by this package
+ - `getFileNames()` - for obtaining a list of all zip files currently available for use by this package
  - `getTeamIDs()` - for providing the team ID value to be used in the `team` argument of `getRetrosheet()`
  - `getParkIDs()` - for ballpark ID and name information
 
