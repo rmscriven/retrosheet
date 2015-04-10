@@ -2,6 +2,7 @@
 
 export(gamelogFields)
 export(getFileNames)
+export(getParkIDs)
 export(getPartialGamelog)
 export(getRetrosheet)
 export(getTeamIDs)
