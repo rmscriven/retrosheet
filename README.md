@@ -11,8 +11,8 @@ Currently, the main functions are
  to choose the columns and date. Column names are made available by the global object `gamelogFields`
  
 Also included are convenience functions `getFileNames()`, for simply viewing a list of all zip files available
-for use by this package, and `getTeamIDs()` for providing the team ID value to be used in the `team` argument of
-`getRetrosheet()`
+for use by this package, `getTeamIDs()` for providing the team ID value to be used in the `team` argument of
+`getRetrosheet()`, and `getParkIDs()` for ballpark information.
 
 `retrosheet` 1.0 is now available on CRAN, and can be installed with
 
