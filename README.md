@@ -14,6 +14,11 @@ Also included are convenience functions `getFileNames()`, for simply viewing a l
 for use by this package, and `getTeamIDs()` for providing the team ID value to be used in the `team` argument of
 `getRetrosheet()`
 
-`retrosheet` is available on CRAN, and can be installed with
+`retrosheet` 1.0 is now available on CRAN, and can be installed with
 
 	install.packages("retrosheet")
+	
+This development version can be installed with 
+
+	install.packages("devtools")
+	devtools::install_github("rmscriven/retrosheet")
