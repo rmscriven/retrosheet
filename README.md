@@ -10,11 +10,12 @@ Currently, the main functions are
  - `getPartialGamelog()` - An alternative to returning the full gamelog files.  This function allows the user
  to choose the columns and date. Column names are made available by the global object `gamelogFields`
  
-Also included are convenience functions `getFileNames()`, for simply viewing a list of all zip files available
-for use by this package, and `getTeamIDs()` for providing the team ID value to be used in the `team` argument of
-`getRetrosheet()`
+Also included are convenience functions 
+ - `getFileNames()` - for obtaining a list of all zip files currently available for use by this package
+ - `getTeamIDs()` - for providing the team ID value to be used in the `team` argument of `getRetrosheet()`
+ - `getParkIDs()` - for ballpark ID and name information
 
-`retrosheet` 1.0 is now available on CRAN, and can be installed with
+`retrosheet` version 1.0.1 is now available on CRAN, and can be installed with
 
 	install.packages("retrosheet")
 	
