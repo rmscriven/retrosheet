@@ -1,15 +1,15 @@
 Package: retrosheet
 Type: Package
 Title: Import Professional Baseball Data from 'Retrosheet'
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: person("Richard", "Scriven", email = "rmscriven@gmail.com", role = c("aut", "cre"))
 Date: 2015-03-17
 Maintainer: Richard Scriven <rmscriven@gmail.com>
-Description: A collection of tools for importing the professional baseball data
-    available from http://www.retrosheet.org. In particular, the event (play-by-play)
-    files can be especially difficult to parse.  This package does the parsing
-    on those files, returning the requested event as a structured R object.
-    It will also retrieve the game-log, roster, and schedule files if requested.
+Description: A collection of tools to import and structure the (currently) single-season
+    event, game-log, roster, and schedule data available from http://www.retrosheet.org.
+    In particular, the event (a.k.a. play-by-play) files can be especially difficult to parse.
+    This package does the parsing on those files, returning the requested data in the most
+    practical R structure to use for sabermetric or other analyses.
 URL: http://github.com/rmscriven/retrosheet
 Depends: R (>= 2.10)
 License: GPL (>= 2)
@@ -17,7 +17,7 @@ Imports: RCurl (>= 1.95-4.5),
     XML (>= 3.98-1.1),
     data.table (>= 1.9.4),
     stringi (>= 0.4-1)
-Note: Notice regarding the transfer of data from Retrosheet:
+Note: NOTICE regarding the transfer of data from Retrosheet:
     The information used here was obtained free of charge from
     and is copyrighted by Retrosheet. Interested parties may
     contact Retrosheet at "www.retrosheet.org".

@@ -24,15 +24,22 @@
 #' \code{glFlields} argument in \code{getPartialGamelog}.}
 #' }
 #'
-#' @examples ## Get Homerun and RBI info for August 25, 2012, with ballpark ID
+#' @examples ## Get Homerun and RBI info for the 2012 season, with park ID
 #' f <- grep("HR|RBI|Park", gamelogFields, value = TRUE)
-#' getPartialGamelog(2012, glFields = f, date = "0825")
+#' getPartialGamelog(2012, glFields = f)
+#'
+#' ## Get Homerun and RBI info for August 25, 2012 - with park ID
+#' getPartialGamelog(glFields=f, date = "20120825")
 #'
 getPartialGamelog <- function(year, glFields, date = NULL, ...) {
 
     ## check 'glFields' against package variable 'retrosheetFields$gamelog'
     if(identical(glFields, retrosheetFields$gamelog)) {
         stop(shQuote("getPartialGamelog"), " is for efficiently returning a small subset of the entire file. For the full table, use ", shQuote("getRetrosheet(\"game\", year)"))
+    }
+
+    if(missing(year)) {
+        year <- substr(date, 1L, 4L)
     }
 
     ## define the url
@@ -45,7 +52,8 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
     download.file(full, destfile = tmp, ...)
 
     ## extract the text file
-    fname <- unzip(tmp, files = unzip(tmp, list = TRUE)$Name)
+    fname <- unzip(tmp, list = TRUE)$Name
+    unzip(tmp, files = fname)
     on.exit(unlink(fname), add = TRUE)
 
     ## match 'glFields' against the internal name vector
@@ -53,10 +61,23 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
 
     ## read the data
     out <- if(is.null(date)) {
+
         fread(fname, select = sel, header = FALSE)
-    } else {
-        command <- sprintf("grep '%s' %s", paste0(year, date), basename(fname))
-        fread(command, header = FALSE, select = sel)
+
+    } else if(is.character(date)) {
+
+        ## get the first column only - this is the 'Date' column
+        sc <- scan(fname, sep = ",", flush = TRUE, what = "", quote = "\"", quiet = TRUE)
+
+        ## find rows of matched dates
+        if(!length(wh <- which(sc == date))) {
+            stop("invalid 'date' given")
+        }
+
+        ## read the file - selecting specified date and columns
+        suppressWarnings(fread(fname, select = sel, header = FALSE,
+            skip = min(wh)-1L, nrows = diff(range(wh))))
+
     }
 
     ## set the names

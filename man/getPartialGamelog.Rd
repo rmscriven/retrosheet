@@ -36,9 +36,12 @@ Instead of returning the entire file, this function allows the user
 to choose the columns and date for game-log data.
 }
 \examples{
-## Get Homerun and RBI info for August 25, 2012, with ballpark ID
+## Get Homerun and RBI info for the 2012 season, with park ID
 f <- grep("HR|RBI|Park", gamelogFields, value = TRUE)
-getPartialGamelog(2012, glFields = f, date = "0825")
+getPartialGamelog(2012, glFields = f)
+
+## Get Homerun and RBI info for August 25, 2012 - with park ID
+getPartialGamelog(glFields=f, date = "20120825")
 }
 \keyword{datasets}
 
