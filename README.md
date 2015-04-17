@@ -15,7 +15,7 @@ Also included are convenience functions
  - `getTeamIDs()` - for providing the team ID value to be used in the `team` argument of `getRetrosheet()`
  - `getParkIDs()` - for ballpark ID and name information
 
-`retrosheet` version 1.0.1 is now available on CRAN, and can be installed with
+`retrosheet` version 1.0.2 is now available on CRAN, and can be installed with
 
 	install.packages("retrosheet")
 	
