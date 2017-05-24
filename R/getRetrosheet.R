@@ -65,7 +65,7 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         "game" = "/gamelogs/gl%d.zip",
         "play" = "/events/%deve.zip",
         "roster" = "/events/%deve.zip",
-        "schedule" = "/schedule/%dsked.txt")
+        "schedule" = "/schedule/%dSKED.ZIP")
 
     fullPath <- sprintf(paste0(u, path), year)
 
