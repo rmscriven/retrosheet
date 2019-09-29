@@ -121,7 +121,7 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         }
         names(v) <- outer
         v[-c(1:2, 6L)] <- lapply(v[-c(1:2, 6L)], stri_split_fixed, ",", simplify = TRUE)
-        ans <- Map(function(A, B) { colnames(A) <- B; A },
+        ans <- Map(function(A, B) { if (length(A)) { colnames(A) <- B; A }},
             A = v, B = retrosheetFields$eventInner)
         ans
     }
