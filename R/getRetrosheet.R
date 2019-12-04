@@ -91,8 +91,11 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         on.exit(unlink(tmp))
         download.file(fullPath, destfile = tmp, ...)
 
+    } else if (file.exists(fullPath)) {
+        message("Using local cache: ", fullPath)
+        tmp <- fullPath
     } else {
-        stop(sprintf("'%s' is not a valid url", fullPath))
+        stop(sprintf("'%s' is not a valid url or path", fullPath))
     }
 
     fname <- unzip(tmp, list = TRUE)$Name
