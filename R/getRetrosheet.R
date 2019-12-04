@@ -51,7 +51,9 @@
 #'
 #' @export
 
-getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, ...) {
+getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, cache = FALSE, ...) {
+    # debug
+    type <- "play"; year <- 2008; team <- "BOS"; cache <- "/data/retrosheet"
 
     type <- match.arg(type, c("game", "play", "roster", "schedule"))
 
@@ -59,7 +61,13 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         stop("argument 'team' must be supplied when 'type = \"play\"")
     }
 
-    u <- "http://www.retrosheet.org"
+    # If cache flag is set to the location of an unzipped cache, use the local file
+    # This allows one to not accidentally DOS the retrosheets website
+    if (isFALSE(cache)) {
+        u <- "http://www.retrosheet.org"
+    } else {
+        u <- cache
+    }
 
     path <- switch(type,
         "game" = "/gamelogs/gl%d.zip",
