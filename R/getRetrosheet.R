@@ -52,8 +52,6 @@
 #' @export
 
 getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, cache = FALSE, ...) {
-    # debug
-    type <- "play"; year <- 2008; team <- "BOS"; cache <- "/data/retrosheet"
 
     type <- match.arg(type, c("game", "play", "roster", "schedule"))
 
