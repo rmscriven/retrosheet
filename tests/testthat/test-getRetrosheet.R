@@ -1,13 +1,16 @@
 test_that("Caching works", {
 
+    # Delete any previously cached data
     unlink("testdata", recursive = TRUE)
 
+    # With caching
     schedule_1 <- getRetrosheet("schedule", 1995, cache = "testdata")
     schedule_1a <- getRetrosheet("schedule", 1995, cache = "testdata/") # Test with trailing slash
     roster_1 <- getRetrosheet("roster", 1995, cache = "testdata")
     game_1 <- getRetrosheet("game", 2012, cache = "testdata")
     play_1 <- getRetrosheet("play", 2012, "SFN", cache = "testdata")
 
+    # Without caching
     schedule_2 <- getRetrosheet("schedule", 1995)
     roster_2 <- getRetrosheet("roster", 1995)
     game_2 <- getRetrosheet("game", 2012)
@@ -25,6 +28,7 @@ test_that("Caching works", {
 })
 
 test_that("Schedule downloading works", {
+
     schedule <- getRetrosheet("schedule", 1995, cache = "testdata")
     schedule_splits <- getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
 
