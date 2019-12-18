@@ -16,7 +16,7 @@
 #' split by the given value, or NULL (the default) for no splitting.
 #' @param stringsAsFactors logical. The \code{stringsAsFactors} argument as
 #' used in \code{\link[base]{data.frame}}. Currently applicable to types "game" and "schedule".
-#' @param cache character. Path to locale cache of retrosheet data. Web version used if not param not specified.
+#' @param cache character. Path to locale cache of retrosheet data. If file doesn't exist, cache for later. If the file exists, used cache instead of web version
 #' @param ... further arguments passed to \code{\link[utils]{download.file}}.
 #'
 #' @return The following return values are possible for the given \code{type}
@@ -53,7 +53,7 @@
 #' @importFrom utils download.file read.csv unzip
 #' @export
 
-getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, cache = FALSE, ...) {
+getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, cache = NA, ...) {
 
     type <- match.arg(type, c("game", "play", "roster", "schedule"))
 
@@ -61,13 +61,13 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         stop("argument 'team' must be supplied when 'type = \"play\"")
     }
 
-    # If cache flag is set to the location of an unzipped cache, use the local file
-    # This allows one to not accidentally DOS the retrosheets website
-    if (isFALSE(cache)) {
-        u <- "http://www.retrosheet.org"
-    } else {
-        u <- cache
-    }
+    # # If cache flag is set to the location of an unzipped cache, use the local file
+    # # This allows one to not accidentally DOS the retrosheets website
+    # if (isFALSE(cache)) {
+    #     u <- "http://www.retrosheet.org"
+    # } else {
+    #     u <- cache
+    # }
 
     path <- switch(type,
         "game" = "/gamelogs/gl%d.zip",
@@ -75,24 +75,44 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         "roster" = "/events/%deve.zip",
         "schedule" = "/schedule/%dSKED.ZIP")
 
-    fullPath <- sprintf(paste0(u, path), year)
-
-    if(url.exists(fullPath)) {
-
-        tmp <- tempfile()
-        on.exit(unlink(tmp))
-        download.file(fullPath, destfile = tmp, ...)
-
-    } else if (file.exists(fullPath)) {
-        message("Using local cache: ", fullPath)
-        tmp <- fullPath
+    # If cache is NA, download to a temp location
+    if (is.na(cache)) {
+        fullPath <- sprintf(paste0("http://www.retrosheet.org", path), year)
+        if(url.exists(fullPath)) {
+            tmp <- tempfile()
+            on.exit(unlink(tmp))
+            download.file(fullPath, destfile = tmp, ...)
+        } else {
+            stop(sprintf("'%s' is not a valid url or path", fullPath))
+        }
     } else {
-        stop(sprintf("'%s' is not a valid url or path", fullPath))
+        # If the cache is something, then:
+
+        # Drop trailing slash on cache path
+        if (substring(cache, nchar(cache)) == "/") {
+            cache <- substring(cache, 1, nchar(cache) - 1)
+        }
+        fullPath <- sprintf(paste0(cache, path), year)
+        remotePath <- sprintf(paste0("http://www.retrosheet.org", path), year)
+        # If the file doesn't exist, download it
+        if (!file.exists(fullPath)) {
+            # Make the folder if it doesn't exist
+            if (!dir.exists(dirname(fullPath))) {
+                dir.create(dirname(fullPath), recursive = TRUE)
+            }
+            # Download the file to the folder
+            message("Caching to: ", fullPath)
+            download.file(remotePath, destfile = fullPath, ...)
+        } else {
+            message("Using local cache: ", fullPath)
+        }
+        # Then use the locally downloaded file as the data source
+        tmp <- fullPath
     }
 
     fname <- unzip(tmp, list = TRUE)$Name
     if(type == "schedule") {
-        out <- read.csv(unz(tmp, filename = fname),, header = FALSE, col.names = retrosheetFields$schedule,
+        out <- read.csv(unz(tmp, filename = fname), header = FALSE, col.names = retrosheetFields$schedule,
                         stringsAsFactors = stringsAsFactors)
         if(is.character(schedSplit)) {
             schedSplit <- match.arg(schedSplit, c("Date", "HmTeam", "TimeOfDay"))

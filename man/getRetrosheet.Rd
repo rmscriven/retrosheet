@@ -10,7 +10,7 @@ getRetrosheet(
   team,
   schedSplit = NULL,
   stringsAsFactors = FALSE,
-  cache = FALSE,
+  cache = NA,
   ...
 )
 }

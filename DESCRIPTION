@@ -24,4 +24,6 @@ Note: NOTICE regarding the transfer of data from Retrosheet:
     The information used here was obtained free of charge from
     and is copyrighted by Retrosheet. Interested parties may
     contact Retrosheet at "www.retrosheet.org".
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
+Suggests: 
+    testthat (>= 2.1.0)

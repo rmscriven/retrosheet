@@ -4,10 +4,6 @@ Import Retrosheet data as a structured R object
 `retrosheet` is an R package that downloads and parses the single-season event, gamelog, roster, and schedule
 files from http://www.retrosheet.org into structured R objects for further analysis.
 
-## Changes in this fork
-* **Local cache**: Use `getRetrosheet()` with the `cache` argument to pull data from a local file, instead of the retrosheet website
-* **Improved parsing**: Handles some edge cases in event data parsing
-
 ## Installation
 This fork of `retrosheet` can be installed with:
 ```r
@@ -18,10 +14,7 @@ devtools::install_github("colindouglas/retrosheet")
 ## Usage
 * `getRetrosheet()` - This workhorse function returns the full seasonal data associated with the user-entered 
  arguments
-    * For cached data, download the *.zip files from retrosheet and put them in a local folder with an identical structure to retrosheet. Then, call `getRetrosheet()` with the `cache` argument specified
-    * If the `cache` argument is left empty, the function will retrieve data from the retrosheet website like previous versions
-    * For example, if you want event log data from the 1957 Baltimore Orioles season, make sure the path `./data/retrosheet/events/1957eve.zip` exists, then call:
-        * `getRetrosheet(type = "play", year = 1957, team = "BAL", cache = "data/retrosheet")`
+    * Use the `cache` argument to save a local cache and avoid stressing retrosheet.org
 * `getPartialGamelog()` - An alternative to returning the full gamelog files.  This function allows the user
  to choose the columns and date. Column names are made available by the global object `gamelogFields`
  
