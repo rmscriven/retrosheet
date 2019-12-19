@@ -1,6 +1,7 @@
 ## Test environments
-* xubuntu 19.10 (local), R 3.6.2 and R-devel
-* windows 10 (virtual machine), R 3.6.2 and R-devel
+* xubuntu 19.10 (local), R 3.6.2 and devel
+* windows 10 (virtual machine), R 3.6.2 and devel
+* win-builder (devel)
 
 ## R CMD check results
 Duration: 31.2s
