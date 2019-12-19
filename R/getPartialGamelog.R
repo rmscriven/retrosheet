@@ -9,10 +9,10 @@
 #' subset of \code{gamelogFields}, and \strong{not} the entire vector.
 #' @param date One of either NULL (the default), or a single four-digit
 #' character string identifying the date 'mmdd'
-#' @param ... further arguments passed to \code{\link[utils]{download.file}}
 #'
 #' @importFrom data.table fread
 #' @importFrom data.table setnames
+#' @importFrom httr GET write_disk
 #'
 #' @export
 #'
@@ -31,7 +31,7 @@
 #' ## Get Homerun and RBI info for August 25, 2012 - with park ID
 #' getPartialGamelog(glFields=f, date = "20120825")
 #'
-getPartialGamelog <- function(year, glFields, date = NULL, ...) {
+getPartialGamelog <- function(year, glFields, date = NULL) {
 
     ## check 'glFields' against package variable 'retrosheetFields$gamelog'
     if(identical(glFields, retrosheetFields$gamelog)) {
@@ -49,7 +49,8 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
     ## download the file
     tmp <- tempfile()
     on.exit(unlink(tmp))
-    download.file(full, destfile = tmp, ...)
+    #download.file(full, destfile = tmp, ...)
+    GET(full, write_disk(tmp, overwrite=TRUE))
 
     ## extract the text file
     fname <- unzip(tmp, list = TRUE)$Name

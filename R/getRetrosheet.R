@@ -17,7 +17,6 @@
 #' @param stringsAsFactors logical. The \code{stringsAsFactors} argument as
 #' used in \code{\link[base]{data.frame}}. Currently applicable to types "game" and "schedule".
 #' @param cache character. Path to locale cache of retrosheet data. If file doesn't exist, cache for later. If the file exists, used cache instead of web version
-#' @param ... further arguments passed to \code{\link[utils]{download.file}}.
 #'
 #' @return The following return values are possible for the given \code{type}
 #' \itemize{
@@ -50,10 +49,10 @@
 #' @importFrom httr http_error GET write_disk
 #' @importFrom stringi stri_split_fixed
 #' @importFrom stats setNames
-#' @importFrom utils download.file read.csv unzip
+#' @importFrom utils read.csv unzip
 #' @export
 
-getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, cache = NA, ...) {
+getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors = FALSE, cache = NA) {
 
     type <- match.arg(type, c("game", "play", "roster", "schedule"))
 

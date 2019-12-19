@@ -10,8 +10,7 @@ getRetrosheet(
   team,
   schedSplit = NULL,
   stringsAsFactors = FALSE,
-  cache = NA,
-  ...
+  cache = NA
 )
 }
 \arguments{
@@ -33,8 +32,6 @@ split by the given value, or NULL (the default) for no splitting.}
 used in \code{\link[base]{data.frame}}. Currently applicable to types "game" and "schedule".}
 
 \item{cache}{character. Path to locale cache of retrosheet data. If file doesn't exist, cache for later. If the file exists, used cache instead of web version}
-
-\item{...}{further arguments passed to \code{\link[utils]{download.file}}.}
 }
 \value{
 The following return values are possible for the given \code{type}

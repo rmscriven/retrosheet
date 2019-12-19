@@ -7,7 +7,7 @@
 \title{Partial parser for game-log files}
 \format{An object of class \code{character} of length 161.}
 \usage{
-getPartialGamelog(year, glFields, date = NULL, ...)
+getPartialGamelog(year, glFields, date = NULL)
 
 gamelogFields
 }
@@ -19,8 +19,6 @@ subset of \code{gamelogFields}, and \strong{not} the entire vector.}
 
 \item{date}{One of either NULL (the default), or a single four-digit
 character string identifying the date 'mmdd'}
-
-\item{...}{further arguments passed to \code{\link[utils]{download.file}}}
 }
 \value{
 \itemize{

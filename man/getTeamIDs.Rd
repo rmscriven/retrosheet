@@ -4,14 +4,10 @@
 \alias{getTeamIDs}
 \title{Retrieve team IDs for event files}
 \usage{
-getTeamIDs(year, quiet = TRUE, ...)
+getTeamIDs(year, quiet = TRUE)
 }
 \arguments{
 \item{year}{A single valid four-digit numeric year.}
-
-\item{quiet}{logical. Passed to \code{\link[utils]{download.file}}}
-
-\item{...}{further arguments passed to \code{\link[utils]{download.file}}.}
 }
 \value{
 If the file exists, a named vector of IDs for the given year.

@@ -12,8 +12,7 @@
 #'
 #' @examples getFileNames()
 #'
-#' @importFrom RCurl getCurlHandle
-#' @importFrom RCurl getURL
+#' @importFrom httr GET content
 #' @importFrom XML htmlParse
 #' @importFrom XML xpathSApply
 #' @importFrom XML free
@@ -22,11 +21,12 @@
 
 getFileNames <- function() {
     path <- c(event = "game.htm", gamelog = "gamelogs/index.html",
-        schedule = "schedule/index.html")
-    full <- sprintf("http://www.retrosheet.org/%s", path)
-    curl <- getCurlHandle()
+    schedule = "schedule/index.html")
+    full <- sprintf("https://www.retrosheet.org/%s", path)
+    #curl <- getCurlHandle()
     docs <- lapply(full, function(x) {
-        content <- getURL(x, curl = curl)
+        #content <- getURL(x, curl = curl)
+         content <- httr::content(httr::GET(x))
         htmlParse(content, asText = TRUE)
     })
     o <- function(pat, doc) {
@@ -34,7 +34,7 @@ getFileNames <- function() {
             path = "(//pre//a | //b/a)/@href", fun = basename)
         grep(pat, fnames, value = TRUE)
     }
-    part <- sprintf(c("%seve.zip", "gl%s.zip", "%ssked.txt"), "\\d+")
+    part <- sprintf(c("%seve.zip", "gl%s.zip", "%sSKED.ZIP"), "\\d+")
     res <- setNames(Map(o, part, docs), names(path))
     lapply(docs, free)
     res
