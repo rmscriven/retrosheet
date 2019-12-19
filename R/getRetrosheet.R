@@ -47,7 +47,7 @@
 #' getRetrosheet("play", 2012, "SFN")
 #' }
 #'
-#' @importFrom RCurl url.exists
+#' @importFrom httr http_error GET write_disk
 #' @importFrom stringi stri_split_fixed
 #' @importFrom stats setNames
 #' @importFrom utils download.file read.csv unzip
@@ -77,11 +77,12 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
 
     # If cache is NA, download to a temp location
     if (is.na(cache)) {
-        fullPath <- sprintf(paste0("http://www.retrosheet.org", path), year)
-        if(url.exists(fullPath)) {
+        fullPath <- sprintf(paste0("https://www.retrosheet.org", path), year)
+        if(!http_error(fullPath)) {
             tmp <- tempfile()
             on.exit(unlink(tmp))
-            download.file(fullPath, destfile = tmp, ...)
+            #download.file(fullPath, destfile = tmp, ...)
+            GET(fullPath, write_disk(tmp, overwrite=TRUE))
         } else {
             stop(sprintf("'%s' is not a valid url or path", fullPath))
         }
@@ -93,7 +94,7 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
             cache <- substring(cache, 1, nchar(cache) - 1)
         }
         fullPath <- sprintf(paste0(cache, path), year)
-        remotePath <- sprintf(paste0("http://www.retrosheet.org", path), year)
+        remotePath <- sprintf(paste0("https://www.retrosheet.org", path), year)
         # If the file doesn't exist, download it
         if (!file.exists(fullPath)) {
             # Make the folder if it doesn't exist
@@ -102,7 +103,8 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
             }
             # Download the file to the folder
             message("Caching to: ", fullPath)
-            download.file(remotePath, destfile = fullPath, ...)
+            GET(remotePath, write_disk(fullPath, overwrite=TRUE))
+            #download.file(remotePath, destfile = fullPath, ...)
         } else {
             message("Using local cache: ", fullPath)
         }
