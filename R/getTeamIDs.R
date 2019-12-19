@@ -19,7 +19,7 @@
 #'
 #' @examples getTeamIDs(2010)
 #'
-getTeamIDs <- function(year, quiet = TRUE) {
+getTeamIDs <- function(year) {
     stopifnot(is.numeric(year), length(year) == 1L)
     path <- sprintf("http://www.retrosheet.org/events/%deve.zip", year)
     if (!http_error(path)) {

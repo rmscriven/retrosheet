@@ -4,7 +4,7 @@
 \alias{getTeamIDs}
 \title{Retrieve team IDs for event files}
 \usage{
-getTeamIDs(year, quiet = TRUE)
+getTeamIDs(year)
 }
 \arguments{
 \item{year}{A single valid four-digit numeric year.}
