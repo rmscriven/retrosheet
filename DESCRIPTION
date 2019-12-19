@@ -1,7 +1,7 @@
 Package: retrosheet
 Type: Package
 Title: Import Professional Baseball Data from 'Retrosheet'
-Version: 1.1.0.9000
+Version: 1.1.0
 Authors@R: as.person(c(
     "Colin Douglas <colindouglas@gmail.com> [aut]", 
     "Richard Scriven <rmscriven@gmail.com> [aut, cre]"

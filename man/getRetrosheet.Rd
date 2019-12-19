@@ -31,7 +31,9 @@ split by the given value, or NULL (the default) for no splitting.}
 \item{stringsAsFactors}{logical. The \code{stringsAsFactors} argument as
 used in \code{\link[base]{data.frame}}. Currently applicable to types "game" and "schedule".}
 
-\item{cache}{character. Path to locale cache of retrosheet data. If file doesn't exist, cache for later. If the file exists, used cache instead of web version}
+\item{cache}{character. Path to locale cache of retrosheet data. If file doesn't exist,
+files will be saved locally for future use. Defaults to "NA" so as not to save local data without
+explicit permission#'}
 }
 \value{
 The following return values are possible for the given \code{type}

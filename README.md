@@ -5,8 +5,12 @@ Import Retrosheet data as a structured R object
 files from http://www.retrosheet.org into structured R objects for further analysis.
 
 ## Installation
-This fork of `retrosheet` can be installed with:
+`retrosheet` can be installed from CRAN, or development versions installed from Github.
 ```r
+# Install from CRAN
+install.packages("retrosheet")
+
+# Install development version from Github
 # install.packages("devtools")
 devtools::install_github("colindouglas/retrosheet")
 ```
