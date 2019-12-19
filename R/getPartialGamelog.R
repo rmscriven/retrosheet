@@ -85,6 +85,7 @@ getPartialGamelog <- function(year, glFields, date = NULL) {
     setnames(out, retrosheetFields$gamelog[sel])
 
     ## return the table
+    closeAllConnections()
     out
 }
 

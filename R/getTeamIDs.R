@@ -25,7 +25,6 @@ getTeamIDs <- function(year) {
     if (!http_error(path)) {
         tmp <- tempfile()
         on.exit(unlink(tmp))
-        #download.file(path, destfile = tmp, quiet = quiet, ...)
         GET(path, write_disk(tmp, overwrite=TRUE))
     } else {
         available <- grep(year, getFileNames()$event)
@@ -38,5 +37,6 @@ getTeamIDs <- function(year) {
     on.exit(unlink(fname), add = TRUE)
     read <- suppressWarnings(fread(fname, header = FALSE, drop = 2:3))
     out <- structure(read[[1L]], .Names = read[[2L]])
+    closeAllConnections()
     out
 }

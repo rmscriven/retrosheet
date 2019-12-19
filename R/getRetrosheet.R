@@ -61,14 +61,6 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         stop("argument 'team' must be supplied when 'type = \"play\"")
     }
 
-    # # If cache flag is set to the location of an unzipped cache, use the local file
-    # # This allows one to not accidentally DOS the retrosheets website
-    # if (isFALSE(cache)) {
-    #     u <- "http://www.retrosheet.org"
-    # } else {
-    #     u <- cache
-    # }
-
     path <- switch(type,
         "game" = "/gamelogs/gl%d.zip",
         "play" = "/events/%deve.zip",
@@ -81,7 +73,6 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         if(!http_error(fullPath)) {
             tmp <- tempfile()
             on.exit(unlink(tmp))
-            #download.file(fullPath, destfile = tmp, ...)
             GET(fullPath, write_disk(tmp, overwrite=TRUE))
         } else {
             stop(sprintf("'%s' is not a valid url or path", fullPath))
@@ -113,33 +104,42 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
     }
 
     fname <- unzip(tmp, list = TRUE)$Name
+
     if(type == "schedule") {
-        out <- read.csv(unz(tmp, filename = fname), header = FALSE, col.names = retrosheetFields$schedule,
+        zcon <- unz(tmp, filename = fname)
+        out <- read.csv(zcon, header = FALSE, col.names = retrosheetFields$schedule,
                         stringsAsFactors = stringsAsFactors)
         if(is.character(schedSplit)) {
             schedSplit <- match.arg(schedSplit, c("Date", "HmTeam", "TimeOfDay"))
             out <- split(out, out[[schedSplit]])
         }
+        closeAllConnections()
         return(out)
     }
     if(type == "game") {
-        out <- read.csv(unz(tmp, filename = fname), header = FALSE, col.names = retrosheetFields$gamelog,
+        zcon <- unz(tmp, filename = fname)
+        out <- read.csv(zcon, header = FALSE, col.names = retrosheetFields$gamelog,
             stringsAsFactors = stringsAsFactors)
+        closeAllConnections()
         return(out)
     }
 
     if(type == "roster") {
         rosFiles <- grep(".ROS", fname, value = TRUE, fixed = TRUE)
         read <- lapply(rosFiles, function(x) {
-            read.csv(unz(tmp, filename = x), header = FALSE, col.names = retrosheetFields$roster,
+            zcon <- unz(tmp, filename = x)
+            o <- read.csv(zcon, header = FALSE, col.names = retrosheetFields$roster,
                 stringsAsFactors = stringsAsFactors)
+            o
         })
         out <- setNames(read, substr(rosFiles, 1L, 3L))
+        closeAllConnections()
         return(out)
     }
-
-    allTeams <- readLines(unz(tmp, filename = paste0("TEAM", year)))
+    zcon <- unz(tmp, filename = paste0("TEAM", year))
+    allTeams <- readLines(zcon)
     team <- match.arg(team, substr(allTeams, 1L, 3L))
+    closeAllConnections()
 
     # function for single game parsing
     doGame <- function(x) {
@@ -163,9 +163,11 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
 
     rgx <- paste(team, "EV", sep = ".")
     fnm <- grep(rgx, fname, value = TRUE, fixed = TRUE)
-    r <- readLines(unz(tmp, filename = fnm))
+    zcon <- unz(tmp, filename = fnm)
+    r <- readLines(zcon)
     g <- grepl("^id", r)
     sr <- unname(split(gsub("\"", "", r), cumsum(g)))
     res <- lapply(sr, doGame)
+    closeAllConnections()
     res
 }

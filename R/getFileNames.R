@@ -40,7 +40,6 @@ getFileNames <- function() {
     }
 
     trimmed <- lapply(links, trim_path)
-
     names(trimmed) <- names(paths)
     trimmed
 }

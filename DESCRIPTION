@@ -2,14 +2,19 @@ Package: retrosheet
 Type: Package
 Title: Import Professional Baseball Data from 'Retrosheet'
 Version: 1.1.0
-Authors@R: as.person(c(
-    "Colin Douglas <colindouglas@gmail.com> [aut, cph]", 
-    "Richard Scriven <rmscriven@gmail.com> [aut, cre, cph]"
-  ))
+Authors@R: 
+  c(person(given = "Colin",
+           family = "Douglas",
+           role = c("aut", "cre", "cph"),
+           email = "colindouglas@gmail.com"),
+    person(given = "Richard",
+           family = "Scriven",
+           role = c("aut", "cph"),
+           email = "rmscriven@gmail.com"))
 Date: 2019-12-19
 Maintainer: Colin Douglas <colindouglas@gmail.com>
 Description: A collection of tools to import and structure the (currently) single-season
-    event, game-log, roster, and schedule data available from http://www.retrosheet.org.
+    event, game-log, roster, and schedule data available from <http://www.retrosheet.org>.
     In particular, the event (a.k.a. play-by-play) files can be especially difficult to parse.
     This package does the parsing on those files, returning the requested data in the most
     practical R structure to use for sabermetric or other analyses.
