@@ -43,7 +43,7 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
     }
 
     ## define the url
-    u <- "http://www.retrosheet.org"
+    u <- "https://www.retrosheet.org"
     full <- sprintf("%s/gamelogs/gl%s.zip", u, year)
 
     ## download the file
