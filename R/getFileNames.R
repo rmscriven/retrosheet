@@ -23,7 +23,7 @@
 getFileNames <- function() {
     path <- c(event = "game.htm", gamelog = "gamelogs/index.html",
         schedule = "schedule/index.html")
-    full <- sprintf("http://www.retrosheet.org/%s", path)
+    full <- sprintf("https://www.retrosheet.org/%s", path)
     curl <- getCurlHandle()
     docs <- lapply(full, function(x) {
         content <- getURL(x, curl = curl)
