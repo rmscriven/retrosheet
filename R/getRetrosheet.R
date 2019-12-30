@@ -59,7 +59,7 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         stop("argument 'team' must be supplied when 'type = \"play\"")
     }
 
-    u <- "http://www.retrosheet.org"
+    u <- "https://www.retrosheet.org"
 
     path <- switch(type,
         "game" = "/gamelogs/gl%d.zip",
