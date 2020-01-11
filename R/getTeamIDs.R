@@ -17,11 +17,11 @@
 #' @importFrom data.table fread
 #' @export
 #'
-#' @examples getTeamIDs(2010)
+#' @examples \dontrun{ getTeamIDs(2010) }
 #'
 getTeamIDs <- function(year) {
     stopifnot(is.numeric(year), length(year) == 1L)
-    path <- sprintf("http://www.retrosheet.org/events/%deve.zip", year)
+    path <- sprintf("https://www.retrosheet.org/events/%deve.zip", year)
     if (!http_error(path)) {
         tmp <- tempfile()
         on.exit(unlink(tmp))
@@ -30,6 +30,7 @@ getTeamIDs <- function(year) {
         available <- grep(year, getFileNames()$event)
         if(!length(available)) {
             return(NA)
+
         }
     }
     fname <- paste0("TEAM", year)
