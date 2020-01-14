@@ -18,6 +18,7 @@ available downloads for the \code{year} and \code{type} arguments
 in \code{getRetrosheet}.
 }
 \examples{
+\donttest{
 getFileNames()
-
+}
 }

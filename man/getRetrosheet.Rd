@@ -52,9 +52,10 @@ This function downloads and parses data from \url{http://www.retrosheet.org}
 for the game-log, event, (play-by-play), roster, and schedule files.
 }
 \examples{
+\donttest{
 ## get the full 1995 season schedule
 getRetrosheet("schedule", 1995)
-\dontrun{
+
 ## get the same schedule, split by time of day
 getRetrosheet("schedule", 1995, schedSplit = "TimeOfDay")
 

@@ -11,6 +11,8 @@ This function returns a two-column data frame of ballpark IDs
 along with current stadium name
 }
 \examples{
+\donttest{
 getParkIDs()
+}
 
 }

@@ -22,6 +22,8 @@ All currently available years can be retrieved with
 \code{type.convert(substr(getFileNames()$event, 1L, 4L))}
 }
 \examples{
-\dontrun{ getTeamIDs(2010) }
+\donttest{
+getTeamIDs(2010)
+}
 
 }

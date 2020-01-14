@@ -17,7 +17,9 @@
 #' @importFrom data.table fread
 #' @export
 #'
-#' @examples \dontrun{ getTeamIDs(2010) }
+#' @examples \donttest{
+#' getTeamIDs(2010)
+#' }
 #'
 getTeamIDs <- function(year) {
     stopifnot(is.numeric(year), length(year) == 1L)

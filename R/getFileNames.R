@@ -10,8 +10,10 @@
 #' not intended to be passed to \code{getRetrosheet}, but is simply a
 #' fast way to determine if the desired data is available.
 #'
-#' @examples \dontrun { getFileNames() }
-#'
+#' @examples
+#' \donttest{
+#' getFileNames()
+#' }
 #' @importFrom httr GET content
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_attr html_nodes

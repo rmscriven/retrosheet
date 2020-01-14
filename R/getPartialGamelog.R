@@ -25,11 +25,13 @@
 #' }
 #'
 #' @examples ## Get Homerun and RBI info for the 2012 season, with park ID
+#' \donttest{
 #' f <- grep("HR|RBI|Park", gamelogFields, value = TRUE)
-#' \dontrun{ getPartialGamelog(2012, glFields = f) }
+#' getPartialGamelog(2012, glFields = f)
 #'
 #' ## Get Homerun and RBI info for August 25, 2012 - with park ID
-#' \dontrun{ getPartialGamelog(glFields=f, date = "20120825") }
+#' getPartialGamelog(glFields=f, date = "20120825")
+#' }
 #'
 getPartialGamelog <- function(year, glFields, date = NULL) {
 

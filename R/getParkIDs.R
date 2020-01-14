@@ -6,7 +6,10 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{ getParkIDs() }
+#' @examples
+#' \donttest{
+#' getParkIDs()
+#' }
 #'
 
 getParkIDs <- function() {
