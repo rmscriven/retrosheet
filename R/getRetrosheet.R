@@ -16,9 +16,9 @@
 #' split by the given value, or NULL (the default) for no splitting.
 #' @param stringsAsFactors logical. The \code{stringsAsFactors} argument as
 #' used in \code{\link[base]{data.frame}}. Currently applicable to types "game" and "schedule".
-#' @param cache character. Path to locale cache of retrosheet data. If file doesn't exist,
+#' @param cache character. Path to local cache of retrosheet data. If file doesn't exist,
 #' files will be saved locally for future use. Defaults to "NA" so as not to save local data without
-#' explicit permission#'
+#' explicit permission
 #' @return The following return values are possible for the given \code{type}
 #' \itemize{
 #' \item \code{game} - a data frame of gamelog data for the given year
@@ -110,6 +110,7 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
         zcon <- unz(tmp, filename = fname)
         out <- read.csv(zcon, header = FALSE, col.names = retrosheetFields$schedule,
                         stringsAsFactors = stringsAsFactors)
+        out <- out[!is.na(out$GameNo), ] # Filter out the last line, which is often parsed incorrectly
         if(is.character(schedSplit)) {
             schedSplit <- match.arg(schedSplit, c("Date", "HmTeam", "TimeOfDay"))
             out <- split(out, out[[schedSplit]])
@@ -172,3 +173,4 @@ getRetrosheet <- function(type, year, team, schedSplit = NULL, stringsAsFactors 
     closeAllConnections()
     res
 }
+

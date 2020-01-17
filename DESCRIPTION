@@ -1,7 +1,7 @@
 Package: retrosheet
 Type: Package
 Title: Import Professional Baseball Data from 'Retrosheet'
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: 
   c(person(given = "Colin",
            family = "Douglas",
@@ -11,7 +11,7 @@ Authors@R:
            family = "Scriven",
            role = c("aut", "cph"),
            email = "rmscriven@gmail.com"))
-Date: 2019-12-19
+Date: 2020-01-16
 Maintainer: Colin Douglas <colindouglas@gmail.com>
 Description: A collection of tools to import and structure the (currently) single-season
     event, game-log, roster, and schedule data available from <http://www.retrosheet.org>.
@@ -26,7 +26,11 @@ Imports: xml2 (>= 1.2.2),
     stringi (>= 0.4-1),
     httr (>= 1.4.1),
     stringr (>= 1.4.0),
-    rvest (>= 0.3.5)
+    rvest (>= 0.3.5),
+    purrr (>= 0.3.3),
+    tibble (>= 2.1.3),
+    readr (>= 1.3.1),
+    lubridate (>= 1.7.4)
 Note: NOTICE regarding the transfer of data from Retrosheet:
     The information used here was obtained free of charge from
     and is copyrighted by Retrosheet. Interested parties may
