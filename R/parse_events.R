@@ -1,33 +1,34 @@
-#' @name parse_event
+#' @name get_games
 #'
 #' @title NOT IMPLEMENTED Parse event strings from retrosheet play-by-play data
 #' #'
 #' @description Parses the strings describing plays returned from the
-#' #' \code{play} element of of \code{getRetrosheet("play", year, team)}.
+#' #' \code{play} element of of \code{getRetrosheet(type = "play")} or \code{get_retrosheet(type = "play")}
 #'
 #' @param play A play object from \code{getRetrosheet(type = "play")} or \code{get_retrosheet(type = "play")}
 #'
-#' @return A list of intepreted details from the event strings#'
+#' @return A list of intepreted details from the event strings'
 #'
 #' @importFrom stringr str_sub str_split
 #' @export
 #'
 #' @examples \donttest{
-#' plays <- getRetrosheet("play", 2012, "SFN")[[1]]$play
-#' parse_event(play)
+#' plays <- get_retrosheet("play", 2012, "SFN")[[1]]$play
+#' parse_play
+#' (play)
 #' }
 #'
 
 # Example data
-#play <- retrosheet::getRetrosheet("play", 2012, "SFN")[[1]]$play
+# play <- retrosheet::get_retrosheet("play", 2012, "SFN")[[1]]$play
 
-parse_event <- function(play) {
+get_games <- function(year, team) {
 
-    # The fifth column is a string that describes the pitch sequence
-    pitch_string <- play[, 5]
+    # The string that represents the pitch seqence
+    pitches <- play$pitches
 
-    # The sixth column is a string that describes the plays
-    play_string <- play[, 6]
+    # The string that represents the play
+    play_string <- play$play
 
 
 # Strikeouts --------------------------------------------------------------
