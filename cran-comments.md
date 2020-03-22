@@ -1,23 +1,20 @@
-## Resubmission
-This is a resubmission. In this version I have:
-
-* Changed the longer data-loading examples (> 5 seconds elapsed) from \\dontrun{} to \\donttest{}
+A minor revision to fix some broken tests, and include a new wrapper function for better workflow.
 
 ## Test environments
-* xubuntu 19.10 (local), R 3.6.2 and devel
-* windows 10 (virtual machine), R 3.6.2 and devel
-* win-builder (devel)
+* xubuntu 19.10 (local), R 3.6.3 and devel
+* Windows 10 (virtual machine), R 3.6.3
+* Windows Server 2008 R2 SP1 (R-Hub), R-devel, 32/64 bit 
 
-## R CMD check results
-Duration: 31.2s
-0 errors | 0 warnings | 0 notes 
+## R CMD check results 
+retrosheet 1.1.1
+Duration: 38.8s
+
+0 errors ✓ | 0 warnings ✓ | 0 notes ✓
+R CMD check succeeded
+
 
 ## R-Hub Notes:
-* "Package was archived on CRAN"
-    * Updated version of prior package, archived 2016-12-30. Re-submitted to CRAN with permission from previous maintainer, Richard M. Scriven <rmscriven@gmail.com>. 
-    
-* Possibly mis-spelled words in DESCRIPTION: sabermetric (20:38)  
-    * Sabermetric is a valid word, an adjective meaning "pertaining to sabermetrics"
+None
     
 ## Downstream dependencies
 None

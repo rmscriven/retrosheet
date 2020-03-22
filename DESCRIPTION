@@ -11,7 +11,7 @@ Authors@R:
            family = "Scriven",
            role = c("aut", "cph"),
            email = "rmscriven@gmail.com"))
-Date: 2020-01-16
+Date: 2020-03-22
 Maintainer: Colin Douglas <colindouglas@gmail.com>
 Description: A collection of tools to import and structure the (currently) single-season
     event, game-log, roster, and schedule data available from <http://www.retrosheet.org>.

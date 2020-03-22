@@ -1,5 +1,6 @@
 # retrosheet 1.1.1
   * Added `get_retrosheet()`, a wrapper for `getRetrosheet()` that takes the same arguments and returns the same data, except coercing matrices into tibbles.
+  * Updated tests to account for more data being added to retrosheet.org (whoops)
 
 # retrosheet 1.1.0
   * Schedule scraping now expects a `*.zip` file instead of `*.txt` file, to accommodate change to retrosheet.org file structure

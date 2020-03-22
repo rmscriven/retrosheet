@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_retrosheet.R
 \name{get_retrosheet}
 \alias{get_retrosheet}
-\title{Import single-season retrosheet data as a list of tibbles}
+\title{Import single-season retrosheet data as tibbles}
 \usage{
 get_retrosheet(type, ...)
 }
@@ -29,7 +29,7 @@ for the named team for the given year, as a data frame.
 This function is a wrapper for getRetrosheet(). It downloads and parses data from
 \url{http://www.retrosheet.org} for the game-log, event, (play-by-play), roster, and schedule files.
 While getRetrosheet() returns a list of matrices, this function returns an otherwise-identical list of tibbles.
-It takes the same argument names, and acts as a drop-in replacement.
+It takes the same arguments, and mcan act as a drop-in replacement.
 }
 \examples{
 \donttest{
