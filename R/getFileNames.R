@@ -10,32 +10,38 @@
 #' not intended to be passed to \code{getRetrosheet}, but is simply a
 #' fast way to determine if the desired data is available.
 #'
-#' @examples getFileNames()
-#'
-#' @importFrom RCurl getCurlHandle
-#' @importFrom RCurl getURL
-#' @importFrom XML htmlParse
-#' @importFrom XML xpathSApply
-#' @importFrom XML free
+#' @examples
+#' \donttest{
+#' getFileNames()
+#' }
+#' @importFrom httr GET content
+#' @importFrom xml2 read_html
+#' @importFrom rvest html_attr html_nodes
+#' @importFrom stringr str_extract
 #'
 #' @export
 
 getFileNames <- function() {
-    path <- c(event = "game.htm", gamelog = "gamelogs/index.html",
-        schedule = "schedule/index.html")
-    full <- sprintf("http://www.retrosheet.org/%s", path)
-    curl <- getCurlHandle()
+    paths <- c(event = "game.htm",
+               gamelog = "gamelogs/index.html",
+               schedule = "schedule/index.html")
+
+    full <- paste0("https://www.retrosheet.org/", paths)
+
     docs <- lapply(full, function(x) {
-        content <- getURL(x, curl = curl)
-        htmlParse(content, asText = TRUE)
+        content <- GET(x)
+        read_html(content, asText = TRUE)
     })
-    o <- function(pat, doc) {
-        fnames  <- xpathSApply(doc,
-            path = "(//pre//a | //b/a)/@href", fun = basename)
-        grep(pat, fnames, value = TRUE)
+
+    get_links <- function(x) html_attr(html_nodes(x, "a"), "href")
+    links <- lapply(docs, get_links)
+
+    trim_path <- function(x) {
+        out <- str_extract(x, pattern = "(gl[0-9]{4}|[0-9]{4}SKED|[0-9]{4}eve)(.zip|.ZIP)")
+        out[!is.na(out)]
     }
-    part <- sprintf(c("%seve.zip", "gl%s.zip", "%ssked.txt"), "\\d+")
-    res <- setNames(Map(o, part, docs), names(path))
-    lapply(docs, free)
-    res
+
+    trimmed <- lapply(links, trim_path)
+    names(trimmed) <- names(paths)
+    trimmed
 }

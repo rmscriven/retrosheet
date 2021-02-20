@@ -6,8 +6,6 @@
 #' \code{team} argument of \code{getRetrosheet("play", year, team)}.
 #'
 #' @param year A single valid four-digit numeric year.
-#' @param quiet logical. Passed to \code{\link[utils]{download.file}}
-#' @param ... further arguments passed to \code{\link[utils]{download.file}}.
 #'
 #' @return If the file exists, a named vector of IDs for the given year.
 #' Otherwise \code{NA}.
@@ -15,23 +13,26 @@
 #' @details All currently available years can be retrieved with
 #' \code{type.convert(substr(getFileNames()$event, 1L, 4L))}
 #'
-#' @importFrom RCurl url.exists
+#' @importFrom httr http_error GET write_disk
 #' @importFrom data.table fread
 #' @export
 #'
-#' @examples getTeamIDs(2010)
+#' @examples \donttest{
+#' getTeamIDs(2010)
+#' }
 #'
-getTeamIDs <- function(year, quiet = TRUE, ...) {
+getTeamIDs <- function(year) {
     stopifnot(is.numeric(year), length(year) == 1L)
-    path <- sprintf("http://www.retrosheet.org/events/%deve.zip", year)
-    if (url.exists(path)) {
+    path <- sprintf("https://www.retrosheet.org/events/%deve.zip", year)
+    if (!http_error(path)) {
         tmp <- tempfile()
         on.exit(unlink(tmp))
-        download.file(path, destfile = tmp, quiet = quiet, ...)
+        GET(path, write_disk(tmp, overwrite=TRUE))
     } else {
         available <- grep(year, getFileNames()$event)
         if(!length(available)) {
             return(NA)
+
         }
     }
     fname <- paste0("TEAM", year)
@@ -39,5 +40,6 @@ getTeamIDs <- function(year, quiet = TRUE, ...) {
     on.exit(unlink(fname), add = TRUE)
     read <- suppressWarnings(fread(fname, header = FALSE, drop = 2:3))
     out <- structure(read[[1L]], .Names = read[[2L]])
+    closeAllConnections()
     out
 }

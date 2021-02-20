@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+tests/testthat/testdata
+cran-comments.md
+^CRAN-RELEASE$

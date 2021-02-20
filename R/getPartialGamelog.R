@@ -9,29 +9,31 @@
 #' subset of \code{gamelogFields}, and \strong{not} the entire vector.
 #' @param date One of either NULL (the default), or a single four-digit
 #' character string identifying the date 'mmdd'
-#' @param ... further arguments passed to \code{\link[utils]{download.file}}
 #'
 #' @importFrom data.table fread
 #' @importFrom data.table setnames
+#' @importFrom httr GET write_disk
 #'
 #' @export
 #'
 #' @return
 #' \itemize{
 #' \item{\code{getPartialGamelog}}{ - A data table with dimensions \code{length(date)} x \code{length(glFields)} if
-#' \code{date} is not NULL, otherwise the row dimension is the nuber of games for the given year.}
+#' \code{date} is not NULL, otherwise the row dimension is the number of games for the given year.}
 #' \item{\code{gamelogFields}}{ - A character vector of possible values to choose from for the
 #' \code{glFlields} argument in \code{getPartialGamelog}.}
 #' }
 #'
 #' @examples ## Get Homerun and RBI info for the 2012 season, with park ID
+#' \donttest{
 #' f <- grep("HR|RBI|Park", gamelogFields, value = TRUE)
 #' getPartialGamelog(2012, glFields = f)
 #'
 #' ## Get Homerun and RBI info for August 25, 2012 - with park ID
 #' getPartialGamelog(glFields=f, date = "20120825")
+#' }
 #'
-getPartialGamelog <- function(year, glFields, date = NULL, ...) {
+getPartialGamelog <- function(year, glFields, date = NULL) {
 
     ## check 'glFields' against package variable 'retrosheetFields$gamelog'
     if(identical(glFields, retrosheetFields$gamelog)) {
@@ -49,7 +51,8 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
     ## download the file
     tmp <- tempfile()
     on.exit(unlink(tmp))
-    download.file(full, destfile = tmp, ...)
+    #download.file(full, destfile = tmp, ...)
+    GET(full, write_disk(tmp, overwrite=TRUE))
 
     ## extract the text file
     fname <- unzip(tmp, list = TRUE)$Name
@@ -84,6 +87,7 @@ getPartialGamelog <- function(year, glFields, date = NULL, ...) {
     setnames(out, retrosheetFields$gamelog[sel])
 
     ## return the table
+    closeAllConnections()
     out
 }
 
